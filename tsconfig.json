@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "ES2015",
+    "declaration": true,
+    "outDir": "./dist",
+    "sourceMap": false,
+    "lib": ["esnext"],
+    "noImplicitAny": false,
+    "strict": true,
+    "strictNullChecks": true,
+    "rootDir": "src",
+    "noUnusedLocals": false,
+    "esModuleInterop": true,
+    "resolveJsonModule": true
+  },
+  "include": [
+    "src/**/*.ts",
+  ],
+  "exclude": ["node_modules", "src/**/*.{test|spec}.ts"]
+}
