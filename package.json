@@ -1,0 +1,82 @@
+{
+  "name": "@showr/indicators",
+  "version": "0.0.1",
+  "description": "Technical indicators for Trading made with Showr",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "rm -rf dist && tsc",
+    "prepare": "npm run build",
+    "test": "jest --coverage --no-cache",
+    "test:build": "jest __tests__ --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
+    "docs:generate": "typedoc --options ./typedoc.js",
+    "lint": "tslint --project tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pratikgaloria/showr-indicators"
+  },
+  "author": "Pratik Galoria <pratik.d.galoria@gmail.com> (https://github.com/pratikgaloria)",
+  "bugs": {
+    "url": "https://github.com/pratikgaloria/showr-indicators/issues"
+  },
+  "homepage": "https://github.com/pratikgaloria/showr-indicators",
+  "keywords": [
+    "stocks",
+    "trading",
+    "algorithm",
+    "indicators",
+    "bse",
+    "nse",
+    "sma",
+    "ema",
+    "rsi",
+    "macd",
+    "bollinger"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@types/jest": "^25.2.1",
+    "@types/jsonfile": "^6.0.0",
+    "@types/node": "^13.11.0",
+    "babel-loader": "^8.1.0",
+    "coveralls": "^3.0.11",
+    "cross-env": "^5.2.1",
+    "husky": "^4.2.5",
+    "jest": "^25.2.7",
+    "lint-staged": "^10.2.11",
+    "prettier": "^1.19.1",
+    "ts-jest": "^25.3.1",
+    "tslint": "^6.1.3",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-plugin-prettier": "^2.3.0",
+    "typedoc": "^0.18.0"
+  },
+  "dependencies": {
+    "typescript": "^3.8.3"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testRegex": "__tests__.*.(test|spec).ts$",
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "modulePaths": [
+      "<rootDir>/src"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.ts": [
+      "tslint --project tsconfig.json --fix",
+      "prettier --single-quote --write"
+    ]
+  }
+}
