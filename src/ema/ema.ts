@@ -1,38 +1,33 @@
-import { Indicator } from '../indicator';
-import { Dataset } from '../dataset';
-import { EnumSymbols } from '../enums/symbols';
+import { Indicator, Dataset } from '@showr/core';
 
-interface IIndicatorOptionsEMA {
-  name?: string;
+interface IIndicatorParamsEMA {
+  attribute: string;
   period?: number;
-  attribute?: keyof typeof EnumSymbols | string;
 }
 
-export class EMA extends Indicator {
-  protected _options: IIndicatorOptionsEMA;
-
-  constructor(options?: IIndicatorOptionsEMA) {
+export class EMA extends Indicator<IIndicatorParamsEMA> {
+  constructor(name: string = 'EMA', params: IIndicatorParamsEMA) {
     super(
-      'EMA',
+      name,
       function(this: EMA, dataset: Dataset) {
-        const { period = 5, attribute = EnumSymbols.close } = this._options;
+        const { attribute, period = 5 } = params;
         const datasetLength = dataset.value.length;
 
         if (datasetLength === 1) {
-          return dataset.quotes[0].value[attribute];
+          return dataset.quotes[0].getAttribute(attribute);
         }
 
         const _smoothing = 2 / (period + 1);
         const lastEMA = dataset.quotes[datasetLength - 2].getIndicator(
           this.name
         );
-        const value = dataset.quotes[datasetLength - 1].value[attribute];
+        const value = dataset.quotes[datasetLength - 1].getAttribute(attribute);
 
         return value * _smoothing + lastEMA * (1 - _smoothing);
       },
-      options
+      {
+        params,
+      }
     );
-
-    this._options = Object.assign({}, options);
   }
 }

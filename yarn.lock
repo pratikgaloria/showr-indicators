@@ -1055,6 +1055,13 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
+"@showr/core@^1.2.6":
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/@showr/core/-/core-1.2.6.tgz#dd5afeadb6cf5cb7a14cd63ee4336132777a4f07"
+  integrity sha512-Dfc2sUTWAQOebf2d114dnKHesVgkl7Sg6ouYCYpA+nvF+fygurTaoyZd26V2DhcaPlYh79l3MSGo0jGhBmMI3A==
+  dependencies:
+    typescript "^3.8.3"
+
 "@sinonjs/commons@^1.7.0":
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/@sinonjs/commons/-/commons-1.8.1.tgz#e7df00f98a203324f6dc7cc606cad9d4a8ab2217"

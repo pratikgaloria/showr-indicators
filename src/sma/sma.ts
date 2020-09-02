@@ -1,37 +1,32 @@
-import { Indicator } from '../indicator';
-import { Dataset } from '../dataset';
-import { EnumSymbols, Keys } from '../enums/symbols';
+import { Indicator, Dataset } from '@showr/core';
 
-interface IIndicatorOptionsSMA {
-  name?: string;
+interface IIndicatorParamsSMA {
+  attribute: string;
   period?: number;
-  attribute?: keyof typeof EnumSymbols | string;
 }
 
-export class SMA extends Indicator {
-  protected _options: IIndicatorOptionsSMA;
-
-  constructor(options?: IIndicatorOptionsSMA) {
+export class SMA extends Indicator<IIndicatorParamsSMA> {
+  constructor(name: string = 'SMA', params: IIndicatorParamsSMA) {
     super(
-      'SMA',
+      name,
       function(this: SMA, dataset: Dataset) {
-        const { period = 5, attribute = EnumSymbols.close } = this._options;
+        const { attribute, period = 5 } = params;
         const datasetLength = dataset.value.length;
 
         if (datasetLength < period) {
-          return dataset.quotes[datasetLength - 1].value[attribute];
+          return dataset.quotes[datasetLength - 1].getAttribute(attribute);
         }
 
         let total = 0;
         for (let i = datasetLength - period; i < datasetLength; i++) {
-          total += dataset.quotes[i].value[attribute];
+          total += dataset.quotes[i].getAttribute(attribute);
         }
 
         return total / period;
       },
-      options
+      {
+        params,
+      }
     );
-
-    this._options = Object.assign({}, options);
   }
 }
