@@ -15,18 +15,14 @@ export class EMA extends Indicator<IIndicatorParamsEMA> {
         const datasetLength = dataset.value.length;
 
         const _smoothing = 2 / (period + 1);
-        const lastEMA = dataset.quotes[datasetLength - 2]?.getIndicator(
-          this.name
-        );
+        const lastEMA = dataset.at(-2)?.getIndicator(this.name);
 
         if (lastEMA && !isNaN(lastEMA) && datasetLength > period) {
-          const value = dataset.quotes[datasetLength - 1].getAttribute(
-            attribute
-          );
+          const value = dataset.at(-1).getAttribute(attribute);
           return value * _smoothing + lastEMA * (1 - _smoothing);
         } else {
           if (datasetLength === period) {
-            const sma = new SMA('sma10', { attribute, period });
+            const sma = new SMA('sma', { attribute, period });
             return sma.calculate(dataset);
           } else {
             if (datasetLength < period) {
@@ -39,7 +35,7 @@ export class EMA extends Indicator<IIndicatorParamsEMA> {
               dsRemaining.quotes.forEach(q => dsSliced.add(q));
               this.spread(dsSliced);
 
-              return dsSliced.quotes[datasetLength - 1].getIndicator(this.name);
+              return dsSliced.at(-1).getIndicator(this.name);
             }
           }
         }
