@@ -1,4 +1,5 @@
 import { Indicator, Dataset } from '@showr/core';
+import { SMA } from '..';
 
 interface IIndicatorParamsEMA {
   attribute: string;
@@ -13,17 +14,35 @@ export class EMA extends Indicator<IIndicatorParamsEMA> {
         const { attribute, period = 5 } = params;
         const datasetLength = dataset.value.length;
 
-        if (datasetLength === 1) {
-          return dataset.quotes[0].getAttribute(attribute);
-        }
-
         const _smoothing = 2 / (period + 1);
-        const lastEMA = dataset.quotes[datasetLength - 2].getIndicator(
+        const lastEMA = dataset.quotes[datasetLength - 2]?.getIndicator(
           this.name
         );
-        const value = dataset.quotes[datasetLength - 1].getAttribute(attribute);
 
-        return value * _smoothing + lastEMA * (1 - _smoothing);
+        if (lastEMA && !isNaN(lastEMA) && datasetLength > period) {
+          const value = dataset.quotes[datasetLength - 1].getAttribute(
+            attribute
+          );
+          return value * _smoothing + lastEMA * (1 - _smoothing);
+        } else {
+          if (datasetLength === period) {
+            const sma = new SMA('sma10', { attribute, period });
+            return sma.calculate(dataset);
+          } else {
+            if (datasetLength < period) {
+              return NaN;
+            } else {
+              const dsSliced = new Dataset(dataset.value.slice(0, period));
+              const dsRemaining = new Dataset(dataset.value.slice(period));
+              this.spread(dsSliced);
+
+              dsRemaining.quotes.forEach(q => dsSliced.add(q));
+              this.spread(dsSliced);
+
+              return dsSliced.quotes[datasetLength - 1].getIndicator(this.name);
+            }
+          }
+        }
       },
       {
         params,
