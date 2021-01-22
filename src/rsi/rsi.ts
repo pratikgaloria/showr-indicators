@@ -1,9 +1,6 @@
-import {
-  Indicator,
-  Dataset,
-  getAverageGain,
-  getAverageLoss,
-} from '@showr/core';
+import { Indicator, Dataset } from '@showr/core';
+import { AverageGain } from './averageGain';
+import { AverageLoss } from './averageLoss';
 
 interface IIndicatorParamsRSI {
   attribute: string;
@@ -15,11 +12,20 @@ export class RSI extends Indicator<IIndicatorParamsRSI> {
     super(
       name,
       function(this: RSI, dataset: Dataset) {
-        const { attribute, period } = params;
-        const flattenDataset = dataset.flatten(attribute);
+        const { period } = params;
+        const datasetLength = dataset.value.length;
 
-        const averageGain = getAverageGain(flattenDataset, period) || 0;
-        const averageLoss = getAverageLoss(flattenDataset, period) || 0;
+        if (datasetLength <= period) {
+          return NaN;
+        }
+
+        const averageGain = dataset
+          .at(-1)
+          ?.getIndicator(`averageGain${params.period}`);
+        const averageLoss = dataset
+          .at(-1)
+          ?.getIndicator(`averageLoss${params.period}`);
+
         const relativeStrength = isNaN(averageGain / averageLoss)
           ? 0
           : averageGain / averageLoss;
@@ -28,6 +34,23 @@ export class RSI extends Indicator<IIndicatorParamsRSI> {
       },
       {
         params,
+        beforeCalculate: (dataset: Dataset) => {
+          if (dataset.value.length > params.period) {
+            const averageGainName = `averageGain${params.period}`;
+            const averageLossName = `averageLoss${params.period}`;
+
+            const avgGain = new AverageGain(averageGainName, {
+              period: params.period,
+              attribute: params.attribute,
+            });
+            const avgLoss = new AverageLoss(averageLossName, {
+              period: params.period,
+              attribute: params.attribute,
+            });
+
+            dataset.apply(avgGain, avgLoss);
+          }
+        },
       }
     );
   }
