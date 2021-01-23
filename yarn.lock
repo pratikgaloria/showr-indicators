@@ -1055,10 +1055,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
-"@showr/core@^1.2.7":
-  version "1.2.7"
-  resolved "https://registry.yarnpkg.com/@showr/core/-/core-1.2.7.tgz#d5a421e2ba884a8b717636bcd4c3dd79c19d1262"
-  integrity sha512-hcvSFB+RHIFGhPgWCYURcV3FzgnmtUUKhd4+fq0vaKQCl2+q+GMoIRWCTC9ND7zLgZMWlVW7i1ui8EFFAlfVEg==
+"@showr/core@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@showr/core/-/core-1.3.0.tgz#8bd680b5d515204064bbaf7dca266d68556f8af6"
+  integrity sha512-qQlwstXEB5Z5Fmn6U3YrykT20AbyZa/V/KxziFp6JdikqSu/yzs7vExZybsHWm/9GtQR7zNkX5XKIRJxMy55hw==
   dependencies:
     typescript "^3.8.3"
 
