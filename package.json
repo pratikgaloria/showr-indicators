@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "rm -rf dist && tsc",
+    "build": "tsc --emitDeclarationOnly && esbuild ./src --target=esnext --bundle --minify --outfile=dist/index.js",
     "prepare": "npm run build",
     "test": "jest --coverage --no-cache",
     "test:build": "jest __tests__ --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
@@ -45,6 +45,7 @@
     "babel-loader": "^8.1.0",
     "coveralls": "^3.0.11",
     "cross-env": "^5.2.1",
+    "esbuild": "^0.12.4",
     "husky": "^4.2.5",
     "jest": "^25.2.7",
     "lint-staged": "^10.2.11",
