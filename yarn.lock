@@ -1415,10 +1415,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@showr/core@1.4.5":
-  version "1.4.5"
-  resolved "https://registry.yarnpkg.com/@showr/core/-/core-1.4.5.tgz#2e2fb0bfec76536b9cb0c489a1abbd047e0eb8d1"
-  integrity sha512-sG9SzH1ZicW/Y8Uk+tx/76svNSrlK02ZclktGuUyAtVxkv7nv23Ic7KVSJtW7P13GdHVV4osp7FjiWOxk97A0w==
+"@showr/core@1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@showr/core/-/core-1.5.0.tgz#edbbaae3c599bceae7df9f0f5b8977c352e665fc"
+  integrity sha512-oINJM5tbTITca95yTLYQcT2qDn9yrQ2nmmIRqIdhex6mYlQqLF7FFoKGBFlbQArdpJzkjSPiuMUYdrHN7oOeJA==
 
 "@sinonjs/commons@^1.7.0":
   version "1.8.1"

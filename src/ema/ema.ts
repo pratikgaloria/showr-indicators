@@ -18,9 +18,7 @@ export class EMA extends Indicator<IIndicatorParamsEMA> {
         const lastEMA = dataset.at(-2)?.getIndicator(this.name);
 
         if (lastEMA && !isNaN(lastEMA) && datasetLength > period) {
-          const value = attribute
-            ? dataset.at(-1).getAttribute(attribute)
-            : dataset.at(-1).value;
+          const value = dataset.valueAt(-1, attribute);
           return value * _smoothing + lastEMA * (1 - _smoothing);
         } else {
           if (datasetLength === period) {

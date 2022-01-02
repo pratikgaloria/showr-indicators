@@ -63,7 +63,7 @@
     "typescript": "4.5.2"
   },
   "dependencies": {
-    "@showr/core": "1.4.5"
+    "@showr/core": "1.5.0"
   },
   "jest": {
     "testEnvironment": "node",
