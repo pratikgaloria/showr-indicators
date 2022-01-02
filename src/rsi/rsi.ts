@@ -7,11 +7,11 @@ interface IIndicatorParamsRSI {
   period: number;
 }
 
-export class RSI extends Indicator<IIndicatorParamsRSI> {
+export class RSI<T = number> extends Indicator<IIndicatorParamsRSI, T> {
   constructor(name = 'RSI', params: IIndicatorParamsRSI) {
     super(
       name,
-      function (this: RSI, dataset: Dataset) {
+      function (this: RSI<T>, dataset: Dataset<T>) {
         const { period } = params;
         const datasetLength = dataset.value.length;
 
@@ -34,16 +34,16 @@ export class RSI extends Indicator<IIndicatorParamsRSI> {
       },
       {
         params,
-        beforeCalculate: (dataset: Dataset) => {
+        beforeCalculate: (dataset: Dataset<T>) => {
           if (dataset.value.length > params.period) {
             const averageGainName = `averageGain${params.period}`;
             const averageLossName = `averageLoss${params.period}`;
 
-            const avgGain = new AverageGain(averageGainName, {
+            const avgGain = new AverageGain<T>(averageGainName, {
               period: params.period,
               attribute: params.attribute,
             });
-            const avgLoss = new AverageLoss(averageLossName, {
+            const avgLoss = new AverageLoss<T>(averageLossName, {
               period: params.period,
               attribute: params.attribute,
             });

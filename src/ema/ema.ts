@@ -6,11 +6,11 @@ interface IIndicatorParamsEMA {
   period?: number;
 }
 
-export class EMA extends Indicator<IIndicatorParamsEMA> {
+export class EMA<T = number> extends Indicator<IIndicatorParamsEMA, T> {
   constructor(name = 'EMA', params: IIndicatorParamsEMA) {
     super(
       name,
-      function (this: EMA, dataset: Dataset) {
+      function (this: EMA<T>, dataset: Dataset<T>) {
         const { attribute, period = 5 } = params;
         const datasetLength = dataset.value.length;
 
@@ -22,14 +22,14 @@ export class EMA extends Indicator<IIndicatorParamsEMA> {
           return value * _smoothing + lastEMA * (1 - _smoothing);
         } else {
           if (datasetLength === period) {
-            const sma = new SMA('sma', { attribute, period });
+            const sma = new SMA<T>('sma', { attribute, period });
             return sma.calculate(dataset);
           } else {
             if (datasetLength < period) {
               return NaN;
             } else {
-              const dsSliced = new Dataset(dataset.value.slice(0, period));
-              const dsRemaining = new Dataset(dataset.value.slice(period));
+              const dsSliced = new Dataset<T>(dataset.value.slice(0, period));
+              const dsRemaining = new Dataset<T>(dataset.value.slice(period));
               this.spread(dsSliced);
 
               dsRemaining.quotes.forEach((q) => dsSliced.add(q));

@@ -6,11 +6,14 @@ interface IIndicatorParamsAverageLoss {
   period: number;
 }
 
-export class AverageLoss extends Indicator<IIndicatorParamsAverageLoss> {
+export class AverageLoss<T = number> extends Indicator<
+  IIndicatorParamsAverageLoss,
+  T
+> {
   constructor(name = 'AverageLoss', params: IIndicatorParamsAverageLoss) {
     super(
       name,
-      function (this: AverageLoss, dataset: Dataset) {
+      function (this: AverageLoss<T>, dataset: Dataset<T>) {
         const { attribute, period } = params;
         const datasetLength = dataset.value.length;
         const lastAverageLoss = dataset.at(-2)?.getIndicator(this.name);

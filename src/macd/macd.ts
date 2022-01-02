@@ -5,11 +5,11 @@ interface IIndicatorParamsMACD {
   attribute?: string;
 }
 
-export class MACD extends Indicator<IIndicatorParamsMACD> {
+export class MACD<T> extends Indicator<IIndicatorParamsMACD, T> {
   constructor(name = 'MACD', params: IIndicatorParamsMACD) {
     super(
       name,
-      function (this: MACD, dataset: Dataset) {
+      function (this: MACD<T>, dataset: Dataset<T>) {
         const datasetLength = dataset.value.length;
 
         if (datasetLength === 1) {
@@ -23,12 +23,12 @@ export class MACD extends Indicator<IIndicatorParamsMACD> {
       },
       {
         params,
-        beforeCalculate: (dataset: Dataset) => {
-          const ema12 = new EMA('ema12', {
+        beforeCalculate: (dataset: Dataset<T>) => {
+          const ema12 = new EMA<T>('ema12', {
             period: 12,
             attribute: params.attribute,
           });
-          const ema26 = new EMA('ema26', {
+          const ema26 = new EMA<T>('ema26', {
             period: 26,
             attribute: params.attribute,
           });

@@ -5,11 +5,11 @@ interface IIndicatorParamsSMA {
   period?: number;
 }
 
-export class SMA extends Indicator<IIndicatorParamsSMA> {
+export class SMA<T = number> extends Indicator<IIndicatorParamsSMA, T> {
   constructor(name = 'SMA', params: IIndicatorParamsSMA) {
     super(
       name,
-      function (this: SMA, dataset: Dataset) {
+      function (this: SMA<T>, dataset: Dataset<T>) {
         const { attribute, period = 5 } = params;
         const datasetLength = dataset.value.length;
 
