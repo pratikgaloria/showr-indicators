@@ -4,13 +4,18 @@
   "description": "Technical indicators for Trading made with Showr",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
   "scripts": {
-    "build": "tsc --emitDeclarationOnly && esbuild ./src --target=esnext --bundle --minify --outfile=dist/index.js",
+    "build": "tsc",
     "prepare": "npm run build",
     "test": "jest --coverage --no-cache",
     "test:build": "jest __tests__ --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "docs:generate": "typedoc --options ./typedoc.js",
-    "lint": "tslint --project tsconfig.json"
+    "lint": "eslint src --ext .ts",
+    "prettify": "prettier \"src/**/*.ts\" --config .prettierrc --write",
+    "precommit": "lint-staged"
   },
   "repository": {
     "type": "git",
@@ -36,33 +41,32 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.9.0",
-    "@babel/preset-env": "^7.9.0",
-    "@types/jest": "^25.2.1",
-    "@types/jsonfile": "^6.0.0",
-    "@types/node": "^13.11.0",
-    "babel-loader": "^8.1.0",
-    "coveralls": "^3.0.11",
-    "cross-env": "^5.2.1",
-    "esbuild": "^0.12.4",
-    "husky": "^4.2.5",
-    "jest": "^25.2.7",
-    "lint-staged": "^10.2.11",
-    "prettier": "^1.19.1",
-    "ts-jest": "^25.3.1",
-    "tslint": "^6.1.3",
-    "tslint-config-prettier": "^1.18.0",
-    "tslint-plugin-prettier": "^2.3.0",
-    "typedoc": "^0.18.0"
+    "@babel/cli": "7.16.0",
+    "@babel/core": "7.16.0",
+    "@babel/preset-env": "7.16.4",
+    "@types/jest": "27.0.3",
+    "@types/jsonfile": "6.0.1",
+    "@types/node": "16.11.11",
+    "@typescript-eslint/eslint-plugin": "5.5.0",
+    "@typescript-eslint/parser": "5.5.0",
+    "babel-loader": "8.2.3",
+    "coveralls": "3.1.1",
+    "cross-env": "5.2.1",
+    "esbuild": "0.14.1",
+    "eslint": "8.3.0",
+    "husky": "7.0.4",
+    "jest": "27.4.0",
+    "lint-staged": "12.1.2",
+    "prettier": "2.5.0",
+    "ts-jest": "27.0.7",
+    "typedoc": "0.22.10",
+    "typescript": "4.5.2"
   },
   "dependencies": {
-    "@showr/core": "^1.3.0",
-    "typescript": "^3.8.3"
+    "@showr/core": "1.4.5"
   },
   "jest": {
     "testEnvironment": "node",
-    "testRegex": "__tests__.*.(test|spec).ts$",
     "transform": {
       "^.+\\.ts$": "ts-jest"
     },
@@ -73,14 +77,9 @@
       "<rootDir>/src"
     ]
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "src/**/*.ts": [
-      "tslint --project tsconfig.json --fix",
+      "eslint src --ext .ts",
       "prettier --single-quote --write"
     ]
   }

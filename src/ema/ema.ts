@@ -2,15 +2,15 @@ import { Indicator, Dataset } from '@showr/core';
 import { SMA } from '..';
 
 interface IIndicatorParamsEMA {
-  attribute: string;
+  attribute?: string;
   period?: number;
 }
 
 export class EMA extends Indicator<IIndicatorParamsEMA> {
-  constructor(name: string = 'EMA', params: IIndicatorParamsEMA) {
+  constructor(name = 'EMA', params: IIndicatorParamsEMA) {
     super(
       name,
-      function(this: EMA, dataset: Dataset) {
+      function (this: EMA, dataset: Dataset) {
         const { attribute, period = 5 } = params;
         const datasetLength = dataset.value.length;
 
@@ -18,7 +18,9 @@ export class EMA extends Indicator<IIndicatorParamsEMA> {
         const lastEMA = dataset.at(-2)?.getIndicator(this.name);
 
         if (lastEMA && !isNaN(lastEMA) && datasetLength > period) {
-          const value = dataset.at(-1).getAttribute(attribute);
+          const value = attribute
+            ? dataset.at(-1).getAttribute(attribute)
+            : dataset.at(-1).value;
           return value * _smoothing + lastEMA * (1 - _smoothing);
         } else {
           if (datasetLength === period) {
@@ -32,7 +34,7 @@ export class EMA extends Indicator<IIndicatorParamsEMA> {
               const dsRemaining = new Dataset(dataset.value.slice(period));
               this.spread(dsSliced);
 
-              dsRemaining.quotes.forEach(q => dsSliced.add(q));
+              dsRemaining.quotes.forEach((q) => dsSliced.add(q));
               this.spread(dsSliced);
 
               return dsSliced.at(-1).getIndicator(this.name);

@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "target": "ES2015",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "target": "ESNext",
     "declaration": true,
     "outDir": "./dist",
     "sourceMap": false,
@@ -13,10 +13,10 @@
     "rootDir": "src",
     "noUnusedLocals": false,
     "esModuleInterop": true,
-    "resolveJsonModule": true
+    "skipLibCheck": true
   },
   "include": [
     "src/**/*.ts",
   ],
-  "exclude": ["node_modules", "__tests__"]
+  "exclude": ["node_modules", "__tests__", "src/**/*.test.ts"]
 }

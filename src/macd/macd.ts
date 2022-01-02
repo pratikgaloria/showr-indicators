@@ -2,14 +2,14 @@ import { Dataset, Indicator } from '@showr/core';
 import { EMA } from '../';
 
 interface IIndicatorParamsMACD {
-  attribute: string;
+  attribute?: string;
 }
 
 export class MACD extends Indicator<IIndicatorParamsMACD> {
-  constructor(name: string = 'MACD', params: IIndicatorParamsMACD) {
+  constructor(name = 'MACD', params: IIndicatorParamsMACD) {
     super(
       name,
-      function(this: MACD, dataset: Dataset) {
+      function (this: MACD, dataset: Dataset) {
         const datasetLength = dataset.value.length;
 
         if (datasetLength === 1) {

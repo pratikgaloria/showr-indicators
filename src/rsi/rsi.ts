@@ -3,15 +3,15 @@ import { AverageGain } from './averageGain';
 import { AverageLoss } from './averageLoss';
 
 interface IIndicatorParamsRSI {
-  attribute: string;
+  attribute?: string;
   period: number;
 }
 
 export class RSI extends Indicator<IIndicatorParamsRSI> {
-  constructor(name: string = 'RSI', params: IIndicatorParamsRSI) {
+  constructor(name = 'RSI', params: IIndicatorParamsRSI) {
     super(
       name,
-      function(this: RSI, dataset: Dataset) {
+      function (this: RSI, dataset: Dataset) {
         const { period } = params;
         const datasetLength = dataset.value.length;
 

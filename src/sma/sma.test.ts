@@ -1,25 +1,15 @@
 import { Dataset } from '@showr/core';
-import { SMA } from '../src';
+import { SMA } from './sma';
 
 describe('SMA should return the correct value', () => {
   // Reference: https://school.stockcharts.com/doku.php?id=technical_indicators:moving_averages
   const data = [
-    22.27,
-    22.19,
-    22.08,
-    22.17,
-    22.18,
-    22.13,
-    22.23,
-    22.43,
-    22.24,
-    22.29,
-    22.15,
+    22.27, 22.19, 22.08, 22.17, 22.18, 22.13, 22.23, 22.43, 22.24, 22.29, 22.15,
     22.39,
   ];
   const name = 'sma10';
   const period = 10;
-  const sma10 = new SMA(name, { attribute: 'close', period });
+  const sma10 = new SMA(name, { period });
 
   it('When dataset length is less than period.', () => {
     expect(
